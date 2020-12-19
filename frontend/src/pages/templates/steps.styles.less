@@ -1,0 +1,147 @@
+@import (reference) '../pages.style.less';
+
+.steps-page {
+  .pages-property(unset);
+
+  @media screen and (max-width: 1440px) {
+    margin: 3vh auto;
+  }
+
+  div.steps-info {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    .category {
+      margin-bottom: 15px;
+      margin-right: 5px;
+      border-radius: 8px;
+      padding: 5px;
+      width: 90%;
+      min-width: 200px;
+      max-width: 400px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+div.choices-card {
+  border-radius: 8px;
+  background-color: #e6faff;
+
+  div.choice-card {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 95%;
+    border-radius: 8px;
+    padding: 3px;
+
+    & span {
+      color: #4ddbff;
+    }
+  }
+
+  div.sample-tasks {
+    align-items: self-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    div.sample-task {
+      cursor: pointer;
+      div.remove-task-icon {
+        position: absolute;
+        right: 12px;
+        top: -4px;
+
+        & span {
+          & svg {
+            width: 8px !important;
+            height: 8px !important;
+          }
+        }
+      }
+
+      position: relative;
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      width: 100%;
+      border-radius: 5px;
+      padding: 3px;
+      margin: 3px;
+      max-width: 200px;
+      word-wrap: break-word;
+      background-color: #b8f1ed;
+      min-height: 65px;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+  }
+
+  div.import-card {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 3px;
+  }
+}
+
+div.go-back {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: -5%;
+  padding-top: 8px;
+}
+
+div.confirm-button {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: -5%;
+  padding: 8px;
+}
+
+div.coming-soon {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  & img {
+    width: 50%;
+    @media screen and (max-width: 1440px) {
+      width: 90% !important;
+    }
+    border-radius: 10px;
+  }
+
+}
+
+div.subscribe-updates {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 8px;
+  margin-left: -5px;
+}
+
+div.feedback-card {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

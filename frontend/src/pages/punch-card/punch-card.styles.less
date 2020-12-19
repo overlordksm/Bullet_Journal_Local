@@ -1,0 +1,88 @@
+@import (reference) '../pages.style.less';
+
+.punch-card-page {
+  .pages-property(unset);
+
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  div.banner {
+    img.banner-pic {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+  }
+
+  div.control-task {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  div.events-card {
+    display: flex !important;
+    justify-content: space-evenly !important;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #e6faff;
+
+    div.sample-task {
+      cursor: pointer;
+
+      div.remove-task-icon {
+        position: absolute;
+        right: 12px;
+        top: -4px;
+
+        & span {
+          & svg {
+            width: 8px !important;
+            height: 8px !important;
+          }
+        }
+      }
+
+      position: relative;
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      width: 100%;
+      border-radius: 5px;
+      padding: 3px;
+      margin: 3px;
+      max-width: 200px;
+      word-wrap: break-word;
+      background-color: #b8f1ed;
+      min-height: 65px;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+  }
+
+  div.selections-card {
+
+    div.selection-card {
+      display: block !important;
+      text-align: center;
+      border-radius: 8px;
+      background-color: #e6faff;
+      margin-left: -28px;
+      margin-bottom: 5px;
+      display: flex;
+      padding: 3px;
+      word-wrap: break-word;
+      text-overflow: ellipsis;
+      max-width: 78%;
+
+      span.selection-text {
+        font-weight: bold;
+      }
+    }
+  }
+}

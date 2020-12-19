@@ -1,0 +1,97 @@
+# IMPORTANT: This file is auto-generated in build time; any change should be in docker-compose-TEMPLATE.yml
+version: '2.1'
+services:
+  auth-proxy:
+    image: xcode1024/auth-proxy:v73
+    container_name: auth-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      AUTH_COOKIE_SECRET: "${AUTH_COOKIE_SECRET}"
+    volumes:
+      - $HOME/docker/auth_proxy/bin:/tmp
+      - $HOME/docker/auth_proxy/log:/var/log
+    depends_on:
+      - frontend
+
+  frontend:
+    image: mwangxx/bulletjournal-frontend:1.1.202012182324
+    container_name: react_app
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - controller
+
+  daemon:
+    container_name: daemon_app
+    image: mwangxx/bulletjournal-daemon:1.1.202012182324
+    ports:
+      - "127.0.0.1:50051:50051"
+    depends_on:
+      cache:
+        condition: service_started
+      database:
+        condition: service_healthy
+    environment: 
+      tier: prod
+    volumes: 
+      - $HOME/docker/daemon/log:/var/log
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://daemon:9091/daemon/healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  controller:
+    image: mwangxx/bulletjournal-backend:1.1.202012182324
+    container_name: springboot_app
+    ports:
+      - "127.0.0.1:8080:8080"
+    environment:
+      spring_profiles_active: prod
+      API_VERSION: 1.1.202012182324
+      SSO_API_KEY: "${SSO_API_KEY}"
+      AWS_ACCESS_KEY: "${AWS_ACCESS_KEY}"
+      AWS_SECRET_KEY: "${AWS_SECRET_KEY}"
+      GOOGLE_CALENDAR_CLIENT_ID: "${GOOGLE_CALENDAR_CLIENT_ID}"
+      GOOGLE_CALENDAR_CLIENT_SECRET: "${GOOGLE_CALENDAR_CLIENT_SECRET}"
+      MJ_APIKEY_PRIVATE: "${MJ_APIKEY_PRIVATE}"
+      MJ_APIKEY_PUBLIC: "${MJ_APIKEY_PUBLIC}"
+      FCM_ACCOUNT_KEY: "${FCM_ACCOUNT_KEY}"
+      SENDER_EMAIL: "${SENDER_EMAIL}"
+      SENDER_NAME: "${SENDER_NAME}"
+      POLYGON_API_KEY: "${POLYGON_API_KEY}"
+      RPC_CLIENT_ID: "${RPC_CLIENT_ID}"
+    volumes:
+      - $HOME/docker/volumes/log:/var/log
+      - $HOME/docker/volumes/etc/key:/etc/key
+    depends_on:
+      database:
+        condition: service_healthy
+
+  cache:
+    image: mwangxx/redis:5.0.8
+    container_name: cache
+    ports:
+      - "127.0.0.1:6379:6379"
+
+  database:
+    image: mwangxx/postgres:12.2-2
+    container_name: db
+    hostname: postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: postgres
+    volumes:
+      - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
+      - $HOME/docker/volumes/db_backup:/var/db_backup    
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
